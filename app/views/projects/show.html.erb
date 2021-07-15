@@ -1,8 +1,15 @@
 <p id="notice"><%= notice %></p>
 <p>
+  <%= link_to 'Edit', edit_project_path(@project) %> |
+  <%= link_to 'Back', projects_path %>
+</p>
+<p>
   <strong>Name:</strong>
   <%= @project.name %>
 </p>
+<div id="add_comment">
+  <%= render partial: "comments/form", locals: {comment: Comment.new} %>
+</div>
 <div class="comments">
   <h3>Comments</h3>
   <%= turbo_stream_from @project, :comments %>
@@ -10,5 +17,3 @@
     <%= render @project.comments.order(created_at: :desc) %>
   </div>
 </div>
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>

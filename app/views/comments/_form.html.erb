@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "comment_form" do %>
+  <%= form_with model: comment, url: project_comments_path(@project) do |form| %>
+    <% if comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(comment.errors.count, "error")%> prohibited this comment from being saved:</h2>
+        <ul>
+          <% comment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <p>
+      <%= form.text_area :body, required: true %>
+    </p>
+    <%= form.submit "Submit", disable_with: 'Submiting...' %>
+  <% end %>
+<% end %>
