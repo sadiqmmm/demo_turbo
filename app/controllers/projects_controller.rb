@@ -23,9 +23,23 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            'project_form',
+            partial: 'projects/form',
+            locals: { project: Project.new }
+          )
+        end
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            'project_form',
+            partial: 'projects/form',
+            locals: { project: @project }
+          )
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end

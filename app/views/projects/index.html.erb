@@ -7,15 +7,13 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td><%= link_to project.name, project %></td>
-        <td>(<%= link_to 'Edit', edit_project_path(project) %> |
-          <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %>)</td>
-      </tr>
-    <% end %>
+  <tbody id="projects">
+    <%= turbo_stream_from @project %>
+    <%= render @projects.order(created_at: :desc) %>
   </tbody>
 </table>
 <br>
-<%= link_to 'New Project', new_project_path %>
+<div id="add_project">
+  <h3>Add project</h3>
+  <%= render partial: "projects/form", locals: {project: Project.new} %>
+</div>
