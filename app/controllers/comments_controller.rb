@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: %i[edit update show destroy]
   def create
     @project = Project.find(params[:project_id])
     @comment = @project.comments.new(comment_params)
@@ -25,7 +26,20 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment.destroy
+    respond_to do |format|
+      format.html { redirect_to project_url(@project), notice: 'Comment was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
+
+  def set_comment
+    @project = Project.find(params[:project_id])
+    @comment = @project.comments.find(params[:id])
+  end
 
   def comment_params
     params.require(:comment).permit(:body)

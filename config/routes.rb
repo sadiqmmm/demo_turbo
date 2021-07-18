@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :projects do
-    resources :comments, only: [:create]
+    resources :comments
   end
   root to: 'projects#index'
 end

@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
+<div id="add_project">
+  <h3>Add project</h3>
+  <%= render partial: "projects/form", locals: {project: Project.new} %>
+</div>
 <h1>Projects</h1>
 <table>
   <thead>
@@ -7,13 +11,9 @@
       <th colspan="3"></th>
     </tr>
   </thead>
+  <%= turbo_stream_from "projects" %>
   <tbody id="projects">
-    <%= turbo_stream_from @project %>
     <%= render @projects.order(created_at: :desc) %>
   </tbody>
 </table>
 <br>
-<div id="add_project">
-  <h3>Add project</h3>
-  <%= render partial: "projects/form", locals: {project: Project.new} %>
-</div>
