@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 <div id="add_project">
   <h3>Add project</h3>
-  <%= render partial: "projects/form", locals: {project: Project.new} %>
+  <%= turbo_frame_tag "project_form" do %>
+    <%= render partial: "projects/form", locals: {project: Project.new} %>
+  <% end %>
 </div>
 <h1>Projects</h1>
 <table>
